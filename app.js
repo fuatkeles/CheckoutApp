@@ -18,8 +18,10 @@ const mac = document.getElementById('mac');
 const trashCan = document.getElementsByClassName("main__product-removal")
 
 
+
 let sepet = 0;
 sum.innerHTML = (0.00).toFixed(2);
+tax.innerHTML = (0.00).toFixed(2);
 
 //!Delete Products
 silBtn.addEventListener('click', () => {
@@ -38,6 +40,7 @@ silBtn.addEventListener('click', () => {
 }
 )
 
+let taxRate = 0.18
 
 
 // TODO artırma işlemini yap!
@@ -49,14 +52,27 @@ artiEksiFirst.addEventListener('click', (e) => {
       quantityFirst.innerHTML = parseInt(quantityFirst.innerHTML) + 1;
       
 
-      totalPara.innerHTML = (parseFloat(totalPara.innerHTML) + parseFloat(priceFirst.innerHTML)).toFixed(2);
-    }
-   else if (e.target.classList.contains("fa-minus")) {
-        quantityFirst.innerHTML = parseInt(quantityFirst.innerHTML) - 1;
-        totalPara.innerHTML = (parseFloat(totalPara.innerHTML) - parseFloat(priceFirst.innerHTML)).toFixed(2);
+      totalPara.innerHTML = (parseFloat(totalPara.innerHTML) + (parseFloat(priceFirst.innerHTML) * (1 + taxRate))).toFixed(2);
+      if(totalPara.innerHTML > 3000){
+        shipping.innerHTML = (0.00).toFixed(2);
+      }
       
     }
-   
+  
+    
+   else if (e.target.classList.contains("fa-minus")) {
+        quantityFirst.innerHTML = parseInt(quantityFirst.innerHTML) - 1;
+        totalPara.innerHTML = totalPara.innerHTML = (parseFloat(totalPara.innerHTML) - (parseFloat(priceFirst.innerHTML) * (1 + taxRate))).toFixed(2);
+      
+    }
+    tax.innerHTML= (parseFloat(totalPara.innerHTML) * taxRate).toFixed(2);
+    sum.innerHTML = (parseFloat(totalPara.innerHTML) + parseFloat(shipping.innerHTML)).toFixed(2);
+    if(totalPara.innerHTML > 2500){
+      shipping.innerHTML = (0.00).toFixed(2);
+    }
+    else{
+      shipping.innerHTML = (25.99).toFixed(2);
+    }
   });
 
   artiEksiSecond.addEventListener('click', (e) => {  
@@ -65,12 +81,21 @@ artiEksiFirst.addEventListener('click', (e) => {
       quantitySecond.innerHTML = parseInt(quantitySecond.innerHTML) + 1;
       
 
-      totalPara.innerHTML = (parseFloat(totalPara.innerHTML) + parseFloat(priceSecond.innerHTML)).toFixed(2);
+      totalPara.innerHTML = totalPara.innerHTML = (parseFloat(totalPara.innerHTML) + (parseFloat(priceSecond.innerHTML) * (1 + taxRate))).toFixed(2);
+     
     }
    else if (e.target.classList.contains("fa-minus")) {
         quantitySecond.innerHTML = parseInt(quantitySecond.innerHTML) - 1;
-        totalPara.innerHTML = (parseFloat(totalPara.innerHTML) - parseFloat(priceSecond.innerHTML)).toFixed(2);
+        totalPara.innerHTML = totalPara.innerHTML = (parseFloat(totalPara.innerHTML) - (parseFloat(priceSecond.innerHTML) * (1 + taxRate))).toFixed(2)
       
+    }
+    tax.innerHTML= (parseFloat(totalPara.innerHTML) * taxRate).toFixed(2);
+    sum.innerHTML = (parseFloat(totalPara.innerHTML) + parseFloat(shipping.innerHTML)).toFixed(2);
+    if(totalPara.innerHTML > 2500){
+      shipping.innerHTML = (0.00).toFixed(2);
+    }
+    else{
+      shipping.innerHTML = (25.99).toFixed(2);
     }
   })
   
@@ -79,13 +104,23 @@ artiEksiFirst.addEventListener('click', (e) => {
     if (e.target.classList.contains("fa-plus")) {
       quantityThird.innerHTML = parseInt(quantityThird.innerHTML) + 1;
       
-
-      totalPara.innerHTML = (parseFloat(totalPara.innerHTML) + parseFloat(priceThird.innerHTML)).toFixed(2);
-    }
+      totalPara.innerHTML = (parseFloat(totalPara.innerHTML) + (parseFloat(priceThird.innerHTML) * (1 + taxRate))).toFixed(2);
+      if(totalPara.innerHTML > 3000){
+        shipping.innerHTML = (0.00).toFixed(2);
+      }}
+    
    else if (e.target.classList.contains("fa-minus")) {
         quantityThird.innerHTML = parseInt(quantityThird.innerHTML) - 1;
-        totalPara.innerHTML = (parseFloat(totalPara.innerHTML) - parseFloat(priceThird.innerHTML)).toFixed(2);
+        totalPara.innerHTML = (parseFloat(totalPara.innerHTML) - (parseFloat(priceThird.innerHTML) * (1 + taxRate))).toFixed(2);
       
+    }
+    tax.innerHTML = (parseFloat(totalPara.innerHTML) * taxRate).toFixed(2);
+    sum.innerHTML = (parseFloat(totalPara.innerHTML) + parseFloat(shipping.innerHTML)).toFixed(2);
+    if(totalPara.innerHTML > 2500){
+      shipping.innerHTML = (0.00).toFixed(2);
+    }
+    else{
+      shipping.innerHTML = (25.99).toFixed(2);
     }
   })
 
