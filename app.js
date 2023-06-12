@@ -124,68 +124,36 @@ artiEksiFirst.addEventListener('click', (e) => {
     }
   })
 
-  for (const can of trashCan){
+  for (const can of trashCan) {
     can.addEventListener('click', (e) => {
       if (confirm('Silmek istediğinize emin misiniz?')) {
         const productRow = can.closest('.main__product');
         const productPrice = parseFloat(productRow.querySelector('.main__product-price').innerText);
         const currentTotal = parseFloat(totalPara.innerText);
         const productCount = parseInt(productRow.querySelector('.main__quantity-controller--text').innerText);
-        const newTotal = currentTotal - (productPrice * productCount);
+        const taxRate = 0.18; // Vergi oranı %18 olarak varsayıldı
+  
+        const productTotal = productPrice * productCount * (1 + taxRate);
+        const newTotal = currentTotal - productTotal;
   
         totalPara.innerText = (newTotal >= 0 ? newTotal.toFixed(2) : '0.00');
+        tax.innerHTML = (newTotal >= 0 ? (newTotal * taxRate).toFixed(2) : '0.00');
+        sum.innerHTML = (newTotal >= 0 ? (newTotal + parseFloat(shipping.innerText)).toFixed(2) : '0.00');
         productRow.remove();
   
         if (document.getElementsByClassName('main__product').length === 0) {
           totalPara.innerText = '0.00';
           productPanel.innerHTML = "No Products!";
+          tax.innerHTML = "0.00";
+          sum.innerHTML = "0.00";
         }
       }
-      
-    
-      
-  })
+    });
+  }
 
 
 
-}
 
-const products = document.querySelectorAll('.product');
-const totalPriceElement = document.getElementById('total-para');
 
-products.forEach((product) => {
-  const plusButton = product.querySelector('.plus-button');
-  const minusButton = product.querySelector('.minus-button');
-  const quantityElement = product.querySelector('.quantity');
-  const priceElement = product.querySelector('.product-price');
-  const price = parseFloat(priceElement.innerText);
 
-  plusButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const currentQuantity = parseInt(quantityElement.innerText);
-    quantityElement.innerText = currentQuantity + 1;
-    updateTotalPrice();
-  });
-
-  minusButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    const currentQuantity = parseInt(quantityElement.innerText);
-    if (currentQuantity > 0) {
-      quantityElement.innerText = currentQuantity - 1;
-      updateTotalPrice();
-    }
-  });
-});
-
-function updateTotalPrice() {
-  let total = 0;
-  products.forEach((product) => {
-    const priceElement = product.querySelector('.product-price');
-    const quantityElement = product.querySelector('.quantity');
-    const price = parseFloat(priceElement.innerText);
-    const quantity = parseInt(quantityElement.innerText);
-    total += price * quantity;
-  });
-  totalPriceElement.innerText = total.toFixed(2);
-}
 
